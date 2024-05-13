@@ -3,21 +3,21 @@
 ## Description
 
 - In [the folder](./experiments) "files of the first try" are stored.
-  - [This file](./ising_no_border.py) stores code that allows to observe 
-  phase transition of 2 dimensional Ising model lattice and calculates
-  average spin and 2 spins' correlation function.
-  ![characteristics](./50x50x100000graph.png)
-  - [Here](./ising_borders.py) is stored code for visualising average
-  lattice view in fixed edge problem:
+- [This file](./ising_no_border.py) stores code that allows to observe 
+phase transition of 2 dimensional Ising model lattice and calculates
+average spin and 2 spins' correlation function.
+![characteristics](./50x50x100000graph.png)
+- [Here](./ising_borders.py) is stored code for visualising average
+lattice view in fixed edge problem:
   
-    | -   | +   | +   | ... | +   | +   | -   |
-    |-----|-----|-----|-----|-----|-----|-----|
-    | -   |     |     |     |     |     | -   |
-    | ⋮   |     |     |     |     |     | ⋮   |
-    | -   |     |     |     |     |     | -   |
-    | -   | +   | +   | ... | +   | +   | -   |
+  | -   | +   | +   | ... | +   | +   | -   |
+  |-----|-----|-----|-----|-----|-----|-----|
+  | -   |     |     |     |     |     | -   |
+  | ⋮   |     |     |     |     |     | ⋮   |
+  | -   |     |     |     |     |     | -   |
+  | -   | +   | +   | ... | +   | +   | -   |
 
-    ![characteristics1](./50x50x100000.gif)
+  ![characteristics1](./50x50x100000.gif)
 
 ## Simulation methodology
 
