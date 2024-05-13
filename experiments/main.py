@@ -23,6 +23,11 @@ def most_probable(T, size, iter=10000):
     E = count_energy(spin_lattice)
     avs = 0
     ac = 0
+
+    im = plt.imshow(spin_lattice)
+    plt.show(block=False)
+    plt.pause(0.5)
+
     for i in range(iter):
         new_spin_lattice = np.pad(np.random.randint(2, size=size)*2 - 1, 1, mode='constant')
         nE = count_energy(new_spin_lattice)
@@ -32,14 +37,22 @@ def most_probable(T, size, iter=10000):
             if i >= 0.5*iter:
                 avs += calculate_average_spin(spin_lattice)
                 ac += 1
+            plt.pause(0.0001)
+            im.set_data(spin_lattice)
+            plt.draw()
         else:
-            p = np.exp((nE-E)/T) if T != 0 else 1
+            p = np.exp((nE-E)/T) if T != 0 else 0
             if np.random.choice([0, 1], 1, p=[1-p, p]) == 1:
                 spin_lattice = new_spin_lattice
                 E = nE
                 if i >= 0.5*iter:
                     avs += calculate_average_spin(spin_lattice)
                     ac += 1
+                plt.pause(0.0001)
+                im.set_data(spin_lattice)
+                plt.draw()
+
+    plt.close()
 
     return avs/ac if ac > 20 else calculate_average_spin(spin_lattice), calculate_average_spin(spin_lattice), E
 
