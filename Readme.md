@@ -65,8 +65,8 @@ visualize_simulation = False     # draw lattice during simulation
 T_0 = 0.00001                    # zero temperature
 T_1 = 10                         # end temperature
 N = 50                           # number of temperatures
-start_iter = 2000000              # number of iterations for start lattice calculation
-sim_iter = 100000                 # number of iterations for simulation
+start_iter = 2000000             # number of iterations for start lattice calculation
+sim_iter = 100000                # number of iterations for simulation
 ```
 
 ## Average Lattice
