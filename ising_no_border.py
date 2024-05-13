@@ -120,11 +120,21 @@ def most_probable(T, size, iter=1000, R=5, correlation_radius=1, graph=True, sta
 
 
 if __name__ == '__main__':
-    size = np.array([50, 50])
-    CR = 1
+    size = np.array([50, 50])        # lattice size
+    CR = 1                           # radius of 2 spin correlation calculation
+    J = 1                            # energy constant; should include k_b; ferromagnetic if positive, antiferromagneic else
+    R_0 = 5                          # wave propagation radius of start lattice calculation
+    R_1 = 3                          # wave propagation radius of simulation
+    visualize_start_lattice = False  # draw lattice during start lattice calculation
+    visualize_simulation = False     # draw lattice during simulation
+    T_0 = 0.00001                    # zero temperature
+    T_1 = 10                         # end temperature
+    N = 50                           # number of temperatures
+    start_iter = 500000              # number of iterations for start lattice calculation
+    sim_iter = 30000                 # number of iterations for simulation
 
-    temperatures = np.linspace(0.00001, 10)
-    start_lattice = most_probable(0.00001, size, iter=500000, correlation_radius=CR, R=5, graph=True)[3]
+    temperatures = np.linspace(T_0, T_1, N)
+    start_lattice = most_probable(T_0, size, iter=start_iter, correlation_radius=CR, R=R_0, graph=visualize_start_lattice, J=J)[3]
     plt.imshow(start_lattice)
     plt.show(block=False)
     plt.pause(3)
@@ -133,7 +143,7 @@ if __name__ == '__main__':
     sc = list()
     e = list()
     for t in tq.tqdm(temperatures):
-        mp = most_probable(t, size, iter=30000, correlation_radius=CR, R=3, graph=True, start_lattice=start_lattice)
+        mp = most_probable(t, size, iter=sim_iter, correlation_radius=CR, R=R_1, graph=visualize_simulation, start_lattice=start_lattice, J=J)
         start_lattice = mp[3]
         spins.append(mp[0])
         sc.append(mp[4])

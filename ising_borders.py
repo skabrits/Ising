@@ -4,15 +4,6 @@ import tqdm as tq
 import matplotlib.animation as animation
 
 
-def calculate_average_spin(state):
-    return np.abs(np.sum(state))/np.prod(state.shape)
-
-
-def calculate_average_spin_scalar(state, r):
-    h, w = state.shape
-    return np.sum([scalar_radius(i, j, state, r=r) for i in range(h) for j in range(w)])/(4*r*h*w)
-
-
 def count_energy(state, J=1):
     h, w = state.shape
     energy = 0
@@ -62,23 +53,7 @@ def switch_radius(i0, j0, r, spin_lattice, T, W=(1, 1, 1, 1, 1), J=1):
     return spin_lattice, no_change
 
 
-def scalar_radius(i0, j0, spin_lattice, r=1):
-    h, w = spin_lattice.shape
-    i = i0 + r
-    j = [j0]
-    scalar_sum = 0
-    while i > i0 - r - 1:
-        for j_c in j:
-            scalar_sum += spin_lattice[i0, j0] * spin_lattice[i % h, j_c % w]
-        i -= 1
-        j = calculate_second_index(i0, j0, i, r)
-        if j[0] == j[1]:
-            j.pop()
-
-    return scalar_sum
-
-
-def most_probable(T, size, iter=1000, R=5, correlation_radius=1, graph=True, start_lattice=None, J=1):
+def most_probable(T, size, iter=1000, R=5, graph=True, start_lattice=None, J=1):
     spin_lattice = np.pad(np.random.randint(2, size=size)*2 - 1, ((1, 1), (1, 1)), mode='constant', constant_values=((1, 1), (-1, -1))) if start_lattice is None else start_lattice
     avm = np.zeros(shape=(size+2))
     ac = 0
@@ -124,10 +99,16 @@ def animate(i):
 
 
 if __name__ == '__main__':
-    size = np.array([50, 50])
-    CR = 1
+    size = np.array([50, 50])        # lattice size
+    J = 1                            # energy constant; should include k_b; ferromagnetic if positive, antiferromagneic else
+    R = 3                            # wave propagation radius of simulation
+    visualize_simulation = False     # draw lattice during simulation
+    T_0 = 0.00001                    # zero temperature
+    T_1 = 10                         # end temperature
+    N = 50                           # number of temperatures
+    sim_iter = 100000                 # number of iterations for simulation
 
-    temperatures = np.linspace(0.00001, 10)
+    temperatures = np.linspace(T_0, T_1, N)
     start_lattice = np.pad(np.ones(shape=size), ((1, 1), (1, 1)), mode='constant', constant_values=((1, 1), (-1, -1)))
     plt.imshow(start_lattice)
     plt.show(block=False)
@@ -135,15 +116,14 @@ if __name__ == '__main__':
     plt.close()
     sm = list()
     for t in tq.tqdm(temperatures):
-        mp = most_probable(t, size, iter=100000, correlation_radius=CR, R=3, graph=False, start_lattice=start_lattice)
+        mp = most_probable(t, size, iter=sim_iter, R=R, graph=visualize_simulation, start_lattice=start_lattice, J=J)
         start_lattice = mp[1]
         sm.append(mp[0])
     f, ax1 = plt.subplots(1, sharex=True)
     im = ax1.imshow(np.pad(np.ones(shape=size), ((1, 1), (1, 1)), mode='constant', constant_values=((1, 1), (-1, -1))))
     ax1.set_title('<|s|>')
 
-    ani = animation.FuncAnimation(f, animate, repeat=True,
-                                    frames=len(sm) - 1, interval=1000)
+    ani = animation.FuncAnimation(f, animate, repeat=True, frames=len(sm) - 1, interval=1000)
     writer = animation.PillowWriter(fps=1, bitrate=1800)
     ani.save('50x50x100000.gif', writer=writer)
     plt.show()
