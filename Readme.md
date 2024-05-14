@@ -87,3 +87,18 @@ T_1 = 10                         # end temperature
 N = 50                           # number of temperatures
 sim_iter = 100000                # number of iterations for simulation
 ```
+
+Also, there is a variant with discrete average over bigger iteration amount:
+
+![characteristics2](./50x50x1000000.gif)
+
+```python
+size = [50, 50]                  # lattice size
+J = 1                            # energy constant; should include k_b; ferromagnetic if positive, antiferromagneic else
+R = 3                            # wave propagation radius of simulation
+visualize_simulation = False     # draw lattice during simulation
+T_0 = 0.00001                    # zero temperature
+T_1 = 10                         # end temperature
+N = 50                           # number of temperatures
+sim_iter = 1000000                # number of iterations for simulation
+```
