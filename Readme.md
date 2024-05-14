@@ -71,9 +71,9 @@ sim_iter = 100000                # number of iterations for simulation
 
 ## Average Lattice
 
-![characteristics1](./50x50x100000.gif)
+![characteristics1](./50x50x1000000_c.gif)
 
-The average lattice is calculated for 50x50 lattice with 10<sup>5</sup> iterations for 50 temperatures evenly
+The average lattice is calculated for 50x50 lattice with 10<sup>6</sup> iterations for 50 temperatures evenly
 distributed in range 0.00001, 10. Parameters of the simulation are following:
 
 In this case lattice "with all spins up" is used as a start lattice.
@@ -85,7 +85,7 @@ visualize_simulation = False     # draw lattice during simulation
 T_0 = 0.00001                    # zero temperature
 T_1 = 10                         # end temperature
 N = 50                           # number of temperatures
-sim_iter = 100000                # number of iterations for simulation
+sim_iter = 1000000                # number of iterations for simulation
 ```
 
 Also, there is a variant with discrete average over bigger iteration amount:

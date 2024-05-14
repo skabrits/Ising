@@ -106,7 +106,7 @@ if __name__ == '__main__':
     T_0 = 0.00001                    # zero temperature
     T_1 = 10                         # end temperature
     N = 50                           # number of temperatures
-    sim_iter = 100000                # number of iterations for simulation
+    sim_iter = 30000                 # number of iterations for simulation
 
     temperatures = np.linspace(T_0, T_1, N)
     start_lattice = np.pad(np.ones(shape=size), ((1, 1), (1, 1)), mode='constant', constant_values=((1, 1), (-1, -1)))
